@@ -44,6 +44,7 @@
 
     @media (min-width: 768px) {
       color: white;
+      font-size: 1rem;
     }
   }
 

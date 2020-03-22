@@ -1,24 +1,18 @@
 <template>
   <div class="home-page">
-    <section class="intro">
+    <section class="intro full-width">
       <h1>This is a home page</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-      ></PostPreview>
-    </section>
+    <PostsList></PostsList>
   </div>
 </template>
 
 <script>
-import PostPreview from '@/components/Posts/PostPreview';
+import PostsList from '@/components/Posts/PostsList';
 
 export default {
   components: {
-    PostPreview
+    PostsList
   },
   data() {
     return {
@@ -75,12 +69,4 @@ export default {
     }
   }
 
-  .featured-posts {
-    display: flex;
-    padding: 20px;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
 </style>

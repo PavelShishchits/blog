@@ -33,6 +33,8 @@
   .header {
     width: 100%;
     position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
     height: 60px;
     display: flex;
     justify-content: space-around;
