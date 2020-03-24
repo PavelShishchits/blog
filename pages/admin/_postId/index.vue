@@ -15,9 +15,6 @@
       AdminPostForm
     },
     props: {},
-    data() {
-      return {}
-    },
     methods: {}
   }
 </script>

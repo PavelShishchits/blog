@@ -3,7 +3,7 @@
     <section class="intro full-width">
       <h1>This is a home page</h1>
     </section>
-    <PostsList></PostsList>
+    <PostsList :posts="loadedPosts"></PostsList>
   </div>
 </template>
 
@@ -14,22 +14,9 @@ export default {
   components: {
     PostsList
   },
-  data() {
-    return {
-      posts: [
-        {
-          id: 1,
-          thumbnail: '/images/post_01.jpg',
-          title: 'Post title',
-          previewText: 'Post preview text'
-        },
-        {
-          id: 2,
-          thumbnail: '/images/post_02.jpg',
-          title: 'Post title',
-          previewText: 'Post preview text'
-        }
-      ]
+  computed: {
+    loadedPosts() {
+      return this.$store.state.postsModule.posts;
     }
   }
 }

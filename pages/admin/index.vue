@@ -5,8 +5,8 @@
     </section>
     <section class="existing-posts">
       <h1>Existings Post</h1>
-      <PostsList :is-admin="true"></PostsList>
-    </section>
+      <PostsList :posts="loadedPosts" :is-admin="true"></PostsList>
+    </section>`
   </div>
 </template>
 
@@ -20,11 +20,11 @@
       PostsList,
       AppButton
     },
-    props: {},
-    data() {
-      return {}
-    },
-    methods: {}
+    computed: {
+      loadedPosts() {
+        return this.$store.state.postsModule.posts;
+      }
+    }
   }
 </script>
 

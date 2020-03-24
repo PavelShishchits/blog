@@ -20,24 +20,15 @@
       isAdmin: {
         type: Boolean,
         required: false
+      },
+      posts: {
+        type: Array,
+        required: true
       }
     },
     data() {
       return {
-        posts: [
-          {
-            id: 1,
-            thumbnail: '/images/post_01.jpg',
-            title: 'Post title',
-            previewText: 'Post preview text'
-          },
-          {
-            id: 2,
-            thumbnail: '/images/post_02.jpg',
-            title: 'Post title',
-            previewText: 'Post preview text'
-          }
-        ]
+
       }
     },
     methods: {}

@@ -1,12 +1,12 @@
 <template>
   <div class="single-post-page">
     <section class="post">
-      <h1 class="post-title">Title of the post</h1>
+      <h1 class="post-title">{{ post.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">last updated on XXX</div>
-        <div class="post-detail">written by Name</div>
+        <div class="post-detail">{{ post.updatedDate }}</div>
+        <div class="post-detail">{{ post.author }}</div>
       </div>
-      <div class="post-content">Content of the post</div>
+      <div class="post-content">{{ post.content }}</div>
     </section>
     <section class="post-feedback">
       <p>Give me a feedback <a href="#" target="_blank">Link</a></p>
@@ -14,6 +14,28 @@
   </div>
 </template>
 
+<script>
+  export default {
+    asyncData(context) {
+      return new Promise((resolve, reject) => {
+         resolve({
+           id: 1,
+           thumbnail: '/images/post_01.jpg',
+           title: `Post title ID: ${context.params.id}`,
+           previewText: 'Post preview text',
+           author: 'Pavel S',
+           updatedDate: new Date(),
+           content: 'lorem lorem  lorem  lorem  lorem  lorem  lorem  lorem lorem lorem'
+         })
+      })
+        .then((data) => {
+          return {
+            post: data
+          };
+        })
+    },
+  }
+</script>
 <style lang="scss">
 
   .single-post-page {
