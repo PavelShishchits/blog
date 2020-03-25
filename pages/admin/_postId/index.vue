@@ -1,21 +1,37 @@
 <template>
   <div class="admin-post-page">
     <section class="update-form">
-      <AdminPostForm></AdminPostForm>
+      <AdminPostForm :post="post" @submit="handleSubmit"></AdminPostForm>
     </section>
   </div>
 </template>
 
 <script>
   import AdminPostForm from '@/components/Admin/AdminPostForm';
+  import axios from 'axios';
 
   export default {
     layout: 'admin',
     components: {
       AdminPostForm
     },
-    props: {},
-    methods: {}
+    asyncData(context) {
+      return axios.get(`https://nuxt-blog-71976.firebaseio.com/posts/${context.params.postId}.json`)
+        .then((response) => {
+          return {
+            post: response.data
+          }
+        })
+        .catch(e => context.error(e))
+    },
+    methods: {
+      handleSubmit(editedPost) {
+        this.$store.dispatch('postsModule/editPost', {...editedPost, id: this.$route.params.postId})
+          .then(() => {
+            this.$router.go(-1);
+          });
+      }
+    }
   }
 </script>
 

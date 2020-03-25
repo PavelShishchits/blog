@@ -1,7 +1,7 @@
 <template>
   <div class="admin-new-post-page">
     <section class="new-post-form">
-      <AdminPostForm></AdminPostForm>
+      <AdminPostForm @submit="handleSubmit"></AdminPostForm>
     </section>
   </div>
 </template>
@@ -13,6 +13,14 @@
     layout: 'admin',
     components: {
       AdminPostForm
+    },
+    methods: {
+      handleSubmit(formData) {
+        this.$store.dispatch('postsModule/addPost', formData)
+          .then(() => {
+            this.$router.go(-1);
+          })
+      }
     }
   }
 </script>

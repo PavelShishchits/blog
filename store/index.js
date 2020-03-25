@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const state = () => ({
 
 });
@@ -12,22 +14,16 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit(vueContext, context) {
-    return new Promise((resolve, reject) => {
-      vueContext.dispatch('postsModule/setPosts', [
-        {
-          id: 1,
-          thumbnail: '/images/post_01.jpg',
-          title: 'Post title',
-          previewText: 'Post preview text'
-        },
-        {
-          id: 2,
-          thumbnail: '/images/post_02.jpg',
-          title: 'Post title 2',
-          previewText: 'Post preview text'
+    return axios.get('https://nuxt-blog-71976.firebaseio.com/posts.json')
+      .then((response) => {
+        let postsArray = [];
+        for (let key in response.data) {
+          if (response.data.hasOwnProperty(key)) {
+            postsArray.push({...response.data[key], id: key})
+          }
         }
-      ]);
-      resolve();
-    })
+        vueContext.dispatch('postsModule/setPosts', postsArray);
+      })
+      .catch(e => context.error(e))
   },
 };

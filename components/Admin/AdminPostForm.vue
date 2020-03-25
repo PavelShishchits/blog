@@ -4,6 +4,7 @@
     <AppControlInput v-model="editedPost.title">Title</AppControlInput>
     <AppControlInput v-model="editedPost.thumbnailLink">Thumbnail Link</AppControlInput>
     <AppControlInput control-type='textarea' v-model="editedPost.content">Content</AppControlInput>
+    <AppControlInput control-type='textarea' v-model="editedPost.previewText">Preview text</AppControlInput>
     <div class="btn-wrap">
       <AppButton type="submit">Save</AppButton>
       <AppButton type="button" btn-style="cancel" @click="onCancel">Cancel</AppButton>
@@ -32,13 +33,17 @@
           author: '',
           title: '',
           thumbnailLink: '',
-          content: ''
+          content: '',
+          previewText: ''
         }
       }
     },
     methods: {
       onFormSubmit() {
-        console.log(this.editedPost);
+        this.$emit('submit', {
+          ...this.editedPost,
+          updatedDate: new Date()
+        });
       },
       onCancel() {
         this.$router.go(-1);
