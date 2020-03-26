@@ -5,7 +5,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'WD Blog',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -19,7 +19,7 @@ export default {
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: { color: '#fff', faildColor: 'red', height: '4px', duration: 5000 },
   /*
   ** Global CSS
   */
@@ -30,6 +30,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/core-components.js',
+    '~/plugins/date-filter.js'
   ],
   /*
   ** Nuxt.js dev-modules
@@ -50,5 +52,12 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  env: {
+    baseUrl: 'https://nuxt-blog-71976.firebaseio.com'
+  },
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
   }
 }

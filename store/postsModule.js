@@ -26,7 +26,7 @@ export const actions = {
     commit('setPosts', payload)
   },
   addPost({commit}, payload) {
-    return axios.post('https://nuxt-blog-71976.firebaseio.com/posts.json', payload)
+    return axios.post(`${process.env.baseUrl}/posts.json`, payload)
       .then((response) => {
         commit('addPost', {
           ...payload,
@@ -36,7 +36,7 @@ export const actions = {
       .catch((error) => console.log(error))
   },
   editPost({commit}, payload) {
-    return axios.put(`https://nuxt-blog-71976.firebaseio.com/posts/${payload.id}.json`, payload)
+    return axios.put(`${process.env.baseUrl}/posts/${payload.id}.json`, payload)
       .then((response) => {
         commit('editPost', {
           ...payload

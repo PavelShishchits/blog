@@ -5,7 +5,8 @@
       v-if="controlType === 'input'"
       v-bind="$attrs"
       :value="value"
-      @input="$emit('input', $event.target.value)">
+      @input="$emit('input', $event.target.value)"
+    />
     <textarea
       v-if="controlType === 'textarea'"
       rows="10"

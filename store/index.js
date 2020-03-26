@@ -14,7 +14,7 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit(vueContext, context) {
-    return axios.get('https://nuxt-blog-71976.firebaseio.com/posts.json')
+    return axios.get(`${process.env.baseUrl}/posts.json`)
       .then((response) => {
         let postsArray = [];
         for (let key in response.data) {
