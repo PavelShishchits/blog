@@ -1,7 +1,8 @@
 <template>
   <div class="admin-page">
     <section class="new-post">
-      <AppButton @click="$router.push('/admin/new-post')">Create Post</AppButton>
+      <AppButton style="margin-right: 10px" @click="$router.push('/admin/new-post')">Create Post</AppButton>
+      <AppButton @click="handleLogOut">Log Out</AppButton>
     </section>
     <section class="existing-posts">
       <h1>Existings Post</h1>
@@ -18,6 +19,12 @@
     layout: 'admin',
     components: {
       PostsList
+    },
+    methods: {
+      handleLogOut() {
+        this.$store.dispatch('auth/logOut');
+        this.$router.push('/admin/auth')
+      }
     },
     computed: {
       loadedPosts() {

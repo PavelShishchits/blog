@@ -1,5 +1,3 @@
 export default function (context) {
-  if (process.client) {
-    context.store.dispatch('auth/autoLogin');
-  }
+  context.store.dispatch('auth/autoLogin', context.req);
 }

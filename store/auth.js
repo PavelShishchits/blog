@@ -1,3 +1,5 @@
+import Cookie from 'js-cookie';
+
 export const state = () => ({
   token: null
 });
@@ -23,7 +25,6 @@ export const actions = {
       .then((response) => {
         commit('authUser', response.idToken);
         dispatch('cacheAuthData', response);
-        dispatch('setLogOutTimer', response.expiresIn * 1000);
       })
       .catch(e => console.log(e))
   },
@@ -32,29 +33,36 @@ export const actions = {
       .then((response) => {
         commit('authUser', response.idToken);
         dispatch('cacheAuthData', response);
-        dispatch('setLogOutTimer', response.expiresIn * 1000);
       })
       .catch(e => console.log(e))
   },
-  setLogOutTimer({commit}, duration) {
-    setTimeout(() => {
-      commit('logOutUse');
-    }, duration)
-  },
   cacheAuthData(context, authData) {
-    const now = new Date();
-    const expirationDate = new Date(now.getTime() + authData.expiresIn * 1000);
-    localStorage.setItem('authData', JSON.stringify({
-      'token': authData.idToken,
-      'expirationDate': expirationDate
-    }));
+    Cookie.set('token',authData.idToken);
+    Cookie.set('expirationDate', new Date().getTime() + Number.parseInt(authData.expiresIn) * 1000);
   },
-  autoLogin({commit}) {
-    const authData = JSON.parse(localStorage.getItem('authData'));
-    const now = new Date();
-    if (!authData || !authData.token || now >= authData.expirationDate) {
-      return;
+  autoLogin({commit, dispatch}, req) {
+    let token;
+    let expirationDate;
+    if (req) {
+      if (!req.headers.cookie) {
+        return;
+      }
+      token = req.headers.cookie.split(';').find((cookie) => cookie.trim().startsWith('token')).split('=')[1];
+      expirationDate = req.headers.cookie.split(';').find((cookie) => cookie.trim().startsWith('expirationDate')).split('=')[1];
+    } else {
+      token = Cookie.get('token');
+      expirationDate = Cookie.get('expirationDate');
     }
-    commit('authUser', authData.token);
+    const now = new Date().getTime();
+    if (!token || !expirationDate || now >= +expirationDate) {
+      dispatch('logOut');
+      return false;
+    }
+    commit('authUser', token);
+  },
+  logOut({commit}) {
+    commit('logOutUser');
+    Cookie.remove('token');
+    Cookie.remove('expirationDate');
   }
 };
