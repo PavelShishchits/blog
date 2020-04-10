@@ -23,8 +23,8 @@ export const actions = {
   setPosts({commit}, payload) {
     commit('setPosts', payload)
   },
-  addPost({commit}, payload) {
-    return this.$axios.$post(`/posts.json`, payload)
+  addPost({commit, rootState}, payload) {
+    return this.$axios.$post(`/posts.json?auth=${rootState.auth.token}`, payload)
       .then((data) => {
         commit('addPost', {
           ...payload,
@@ -33,8 +33,8 @@ export const actions = {
       })
       .catch((error) => console.log(error))
   },
-  editPost({commit}, payload) {
-    return this.$axios.$put(`/posts/${payload.id}.json`, payload)
+  editPost({commit, rootState}, payload) {
+    return this.$axios.$put(`/posts/${payload.id}.json?auth=${rootState.auth.token}`, payload)
       .then((data) => {
         commit('editPost', {
           ...payload
