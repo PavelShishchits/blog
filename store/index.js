@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const state = () => ({
 
 });
@@ -14,12 +12,12 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit(vueContext, context) {
-    return axios.get(`${process.env.baseUrl}/posts.json`)
-      .then((response) => {
+    return context.app.$axios.$get(`/posts.json`)
+      .then((data) => {
         let postsArray = [];
-        for (let key in response.data) {
-          if (response.data.hasOwnProperty(key)) {
-            postsArray.push({...response.data[key], id: key})
+        for (let key in data) {
+          if (data.hasOwnProperty(key)) {
+            postsArray.push({...data[key], id: key})
           }
         }
         vueContext.dispatch('postsModule/setPosts', postsArray);

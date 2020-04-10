@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const state = () => ({
   posts: []
 });
@@ -26,18 +24,18 @@ export const actions = {
     commit('setPosts', payload)
   },
   addPost({commit}, payload) {
-    return axios.post(`${process.env.baseUrl}/posts.json`, payload)
-      .then((response) => {
+    return this.$axios.$post(`/posts.json`, payload)
+      .then((data) => {
         commit('addPost', {
           ...payload,
-          id: response.data.name
+          id: data.name
         })
       })
       .catch((error) => console.log(error))
   },
   editPost({commit}, payload) {
-    return axios.put(`${process.env.baseUrl}/posts/${payload.id}.json`, payload)
-      .then((response) => {
+    return this.$axios.$put(`/posts/${payload.id}.json`, payload)
+      .then((data) => {
         commit('editPost', {
           ...payload
         });
