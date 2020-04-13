@@ -1,3 +1,4 @@
+import axios from 'axios';
 
 export default {
   mode: 'universal',
@@ -65,5 +66,18 @@ export default {
   transition: {
     name: 'fade',
     mode: 'out-in'
+  },
+  generate: {
+    routes: function () {
+      return axios.get(`https://nuxt-blog-71976.firebaseio.com/posts.json`)
+        .then((res) => {
+          return Object.keys(res.data).map((item) => {
+            return {
+              route: `/posts/${item}`,
+              payload: {postData: res.data[item]}
+            }
+          });
+        })
+    }
   }
 }

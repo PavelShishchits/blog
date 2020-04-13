@@ -49,7 +49,7 @@ export const actions = {
       }
       token = req.headers.cookie.split(';').find((cookie) => cookie.trim().startsWith('token')).split('=')[1];
       expirationDate = req.headers.cookie.split(';').find((cookie) => cookie.trim().startsWith('expirationDate')).split('=')[1];
-    } else {
+    } else if (process.client) {
       token = Cookie.get('token');
       expirationDate = Cookie.get('expirationDate');
     }
